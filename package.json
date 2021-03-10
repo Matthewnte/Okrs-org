@@ -1,0 +1,42 @@
+{
+  "name": "okrs-org",
+  "version": "1.0.0",
+  "description": "A collaborative goal setting tool used by teams and individual to set challenging, ambitious goals and measurable results.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint . --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Matthewnte/Okrs-org.git"
+  },
+  "keywords": [
+    "OKR"
+  ],
+  "author": "Matthew Nte",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Matthewnte/Okrs-org/issues"
+  },
+  "homepage": "https://github.com/Matthewnte/Okrs-org#readme",
+  "dependencies": {
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^4.4.1",
+    "mongoose": "^5.11.19",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.2",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "eslint": "^7.21.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "prettier": "^2.2.1"
+  }
+}
