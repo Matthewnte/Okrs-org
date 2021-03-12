@@ -15,5 +15,7 @@
         "ecmaVersion": 2018
     },
     "rules": {
+        "object-curly-newline": "off",
+        "implicit-arrow-linebreak": "off"
     }
 }
