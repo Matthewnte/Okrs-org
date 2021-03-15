@@ -4,9 +4,11 @@ const morgan = require('morgan');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-const BaseRoutes = require('./src/routes');
+const BaseRoutes = require('./src/api/routes');
 const logger = require('./src/config/winston');
 const mongoConnection = require('./src/database/mongoose');
+const errorHandler = require('./src/api/middleware/errorHandler');
+const Exception = require('./src/helpers/exception');
 
 dotenv.config();
 mongoConnection();
@@ -28,11 +30,13 @@ app.use(urlencoded({ extended: false }));
 
 app.use('/', BaseRoutes);
 app.use('/docs', express.static('dist/docs'));
-app.use('*', (request, response) => {
-  response.status(404).send('Route not Found!');
+app.all('*', (request, response, next) => {
+  next(new Exception('Route not Found!', 404));
 });
 
 app.use(helmet());
+
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   logger.info(`Server running on Port ${PORT}`);

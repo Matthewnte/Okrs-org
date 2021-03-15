@@ -1,5 +1,5 @@
-import nodemailer from 'nodemailer';
-import { email } from '../config';
+const nodemailer = require('nodemailer');
+const { email } = require('../config');
 
 /**
  * @description Send email service
@@ -26,4 +26,4 @@ const sendEmail = async (options) => {
   await transporter.sendMail(mailOptions);
 };
 
-export default sendEmail;
+module.exports = sendEmail;

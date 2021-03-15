@@ -25,10 +25,10 @@ const JWTHelper = (() => {
    * The generated token object containing access token and refresh token
    */
   const generateTokens = (user) => {
-    const access = makeToken(user);
-    const refresh = makeToken(user, JWTConfig.REFRESH_TOKEN_LIFESPAN);
-    refreshTokenList[refresh] = access;
-    return { access, refresh };
+    const accessToken = makeToken(user);
+    const refreshToken = makeToken(user, JWTConfig.REFRESH_TOKEN_LIFESPAN);
+    refreshTokenList[refreshToken] = accessToken;
+    return { accessToken, refreshToken };
   };
 
   const removeTokenFromRefereshList = (token) => {
@@ -53,14 +53,14 @@ const JWTHelper = (() => {
       throw new Error('Invalid old token: supplied old access token cannot be found');
     }
     const user = JWTHelper.verifyToken(refreshToken, false);
+
     if (user && user.id) {
       removeTokenFromRefereshList(refreshToken);
-      const { id, userName, email, roles } = await User.findOne(user.id);
-      const { access, refresh } = generateTokens({
+      const { id, email, role } = await User.findOne({ email: user.email });
+      const { accessToken: access, refreshToken: refresh } = generateTokens({
         id,
-        userName,
         email,
-        roles,
+        role,
       });
       refreshTokenList[refresh] = access;
       return { access, refresh };

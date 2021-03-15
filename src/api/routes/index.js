@@ -1,11 +1,11 @@
 const express = require('express');
 
-// import userRoute from './userRoute';
-// import authRoute from './authRoute';
+// const userRoute = require('./user');
+const authRoute = require('./auth');
 
 const BaseRoutes = express.Router();
 
 // userRoute(BaseRoutes);
-// authRoute(BaseRoutes);
+authRoute(BaseRoutes);
 
 module.exports = BaseRoutes;

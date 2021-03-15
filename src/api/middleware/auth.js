@@ -1,6 +1,6 @@
-import logger from '../config/winston';
-
-import { getAccessToken, authorize } from '../helpers/authentication';
+/* eslint-disable consistent-return */
+const logger = require('../../config/winston');
+const { getAccessToken, authorize } = require('../../helpers/authentication');
 
 const AuthMiddleware = {
   isAuthenticated: async (request, response, next) => {
@@ -38,4 +38,4 @@ const AuthMiddleware = {
   },
 };
 
-export default AuthMiddleware;
+module.exports = AuthMiddleware;
