@@ -11,7 +11,7 @@ const authRoute = (authRoutes) => {
   authRoutes.post('/auth/login', AuthController.login);
   // authRoutes.get('/auth/logout', AuthController.handleLogout);
   authRoutes.post('/auth/renew-token', isAuthenticated, AuthController.renewAccessToken);
-  authRoutes.post('/auth/update-password', isAuthenticated, AuthController.updatePassword);
+  authRoutes.patch('/auth/update-password', isAuthenticated, AuthController.updatePassword);
   authRoutes.post('/auth/forgot-password', AuthController.forgotPassword);
   authRoutes.patch('/auth/reset-password', isAuthenticated, AuthController.resetPassword);
 };

@@ -24,4 +24,10 @@ module.exports = {
     host: process.env.EMAIL_HOST,
     port: process.env.EMAIL_PORT,
   },
+
+  cloudinary: {
+    name: process.env.CLOUDINARY_NAME,
+    apiKey: process.env.CLOUDINARY_API_KEY,
+    apiSecret: process.env.CLOUDINARY_API_SECRET,
+  },
 };

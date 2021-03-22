@@ -38,7 +38,7 @@ exports.login = catchAsyncError(async (request, response) => {
 
   const { accessToken, refreshToken } = await AuthService.userLogin(userData);
 
-  return response.status(201).json({
+  return response.status(200).json({
     status: 'success',
     data: {
       accessToken,
@@ -112,7 +112,6 @@ exports.resetPassword = catchAsyncError(async (request, response) => {
 });
 
 exports.updatePassword = catchAsyncError(async (request, response) => {
-  // Get user from the collection
   const { currentPassword, newPassword } = request.body;
   const userData = {
     currentPassword,
@@ -120,11 +119,11 @@ exports.updatePassword = catchAsyncError(async (request, response) => {
     userId: request.user.id,
   };
 
-  const user = await AuthService.updatePassword(userData);
+  await AuthService.updatePassword(userData);
 
   // Log user in, send jwt
   return response.status(200).json({
     status: 'success',
-    data: { user },
+    message: 'Password successfully updated',
   });
 });

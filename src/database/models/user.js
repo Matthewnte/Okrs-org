@@ -31,11 +31,8 @@ const userSchema = mongoose.Schema(
     jobTitle: {
       type: String,
     },
-    leadId: { type: String },
-    department: {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Department',
-    },
+    manager: String,
+    group: Array,
     passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetExpires: Date,
@@ -52,10 +49,8 @@ const userSchema = mongoose.Schema(
 );
 
 userSchema.pre('save', async function (next) {
-  // Only run if password was modified
   if (!this.isModified('password')) return next();
 
-  // hash pass with cost of 12
   this.password = await bcrypt.hash(this.password, 12);
 
   return next();

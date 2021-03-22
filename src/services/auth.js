@@ -7,7 +7,6 @@ const sendEmail = require('../helpers/email');
 
 const AuthService = {
   userSignup: async (userData) => {
-    console.log(userData.password);
     const user = await User.create(userData);
 
     const { accessToken, refreshToken } = JWTHelper.generateTokens({
@@ -15,6 +14,19 @@ const AuthService = {
       email: user.email,
       roles: user.role,
     });
+
+    try {
+      const message = `Here's your temporary OKR password - ${userData.password}`;
+
+      await sendEmail({
+        email: userData.email,
+        subject: 'Temporary OKR password',
+        message,
+      });
+    } catch (err) {
+      await User.findByIdAndDelete(user._id);
+      throw new Exception('There was an error sending this mail, Try again later', 500);
+    }
 
     return { accessToken, refreshToken };
   },
