@@ -6,7 +6,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const BaseRoutes = require('./src/api/routes');
 const keyResultRoutes = require('./src/api/routes/keyResult');
-const logger = require('./src/config/winston');
+// const logger = require('./src/config/winston');
 const mongoConnection = require('./src/database/mongoose');
 const errorHandler = require('./src/api/middleware/errorHandler');
 const Exception = require('./src/helpers/exception');
@@ -48,5 +48,5 @@ app.use(helmet());
 app.use(errorHandler);
 
 app.listen(PORT, () => {
-  logger.info(`Server running on Port ${PORT}`);
+  console.log(`Server running on Port ${PORT}`);
 });
