@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const config = require('../config');
-// const logger = require('../config/winston');
+const logger = require('../config/winston');
 
 /**
  * @name connectDB
@@ -14,9 +14,9 @@ const connectDB = async () => {
       useCreateIndex: true,
       useUnifiedTopology: true,
     });
-    console.log('DB connection successful');
+    logger.info('DB connection successful');
   } catch (error) {
-    console.log('An error occured connecting to DB');
+    logger.info('An error occured connecting to DB');
   }
 };
 
