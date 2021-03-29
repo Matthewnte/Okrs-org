@@ -13,8 +13,9 @@ const ObjectiveController = {
 
   getAllObjectives: catchAsyncError(async (request, response) => {
     const { query } = request;
+    const { objectiveId } = request.params;
 
-    const objectives = await ObjectiveService.getAllObjectives(query);
+    const objectives = await ObjectiveService.getAllObjectives(query, objectiveId);
 
     return response.status(201).json({
       status: 'success',
@@ -24,9 +25,11 @@ const ObjectiveController = {
   }),
 
   getOneObjective: catchAsyncError(async (request, response) => {
-    const { objectiveId } = request.params;
+    const { objectiveId, subObjectiveId } = request.params;
+    const data = { objectiveId };
+    if (subObjectiveId) data.objectiveId = subObjectiveId;
 
-    const objective = await ObjectiveService.getOneObjective(objectiveId);
+    const objective = await ObjectiveService.getOneObjective(data, subObjectiveId);
 
     return response.status(201).json({
       status: 'success',
@@ -35,9 +38,11 @@ const ObjectiveController = {
   }),
 
   updateObjective: catchAsyncError(async (request, response) => {
-    const { objectiveId } = request.params;
+    const { objectiveId, subObjectiveId } = request.params;
+    const data = { objectiveId };
+    if (subObjectiveId) data.objectiveId = subObjectiveId;
 
-    const objective = await ObjectiveService.updateObjective(objectiveId, request.body);
+    const objective = await ObjectiveService.updateObjective(data, request.body);
 
     return response.status(200).json({
       status: 'success',
@@ -46,9 +51,11 @@ const ObjectiveController = {
   }),
 
   deleteObjective: catchAsyncError(async (request, response) => {
-    const { objectiveId } = request.params;
+    const { objectiveId, subObjectiveId } = request.params;
+    const data = { objectiveId };
+    if (subObjectiveId) data.objectiveId = subObjectiveId;
 
-    await ObjectiveService.deleteObjective(objectiveId);
+    await ObjectiveService.deleteObjective(data);
 
     return response.status(204).json({
       status: 'success',

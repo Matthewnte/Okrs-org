@@ -1,17 +1,14 @@
 const mongoose = require('mongoose');
 
-const requiredField = {
-  type: String,
-  required: true,
-};
-
 const commentSchema = mongoose.Schema({
-  comment: requiredField,
+  comment: {
+    type: String,
+    required: true,
+  },
   user: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
-    required: [true, 'Comment must have a lead'],
   },
 });
 
-module.exports = mongoose.model('Comment', commentSchema);
+module.exports = commentSchema;

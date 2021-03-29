@@ -1,6 +1,8 @@
 /* eslint-disable consistent-return */
 const logger = require('../../config/winston');
+const User = require('../../database/models/user');
 const { getAccessToken, authorize } = require('../../helpers/authentication');
+const Exception = require('../../helpers/exception');
 
 const AuthMiddleware = {
   isAuthenticated: async (request, response, next) => {
@@ -15,26 +17,24 @@ const AuthMiddleware = {
 
         return response.status(code).send({ code, message });
       }
-      request.user = auth.user;
+      const user = await User.findById(auth.user.id).select('email role');
+      request.user = user;
       next();
     } catch (error) {
       logger.info(error);
       response.status(401).json({
         status: 'failed',
-        message: error.response.data.message || error.message,
+        message: error.message,
       });
     }
   },
 
-  restrictTo: (role) => (request, response, next) => {
-    const userRole = request.user.roles || [];
-    if (!userRole.includes(role)) {
-      return response.status(403).json({
-        status: 'failed',
-        message: 'You do not have permission to perform this action',
-      });
+  restrictTo: (...roles) => (req, res, next) => {
+    // check if user role is not included in allowed roles
+    if (!roles.includes(req.user.role)) {
+      throw new Exception('You do not have permission to perform this action', 403);
     }
-    next();
+    return next();
   },
 };
 

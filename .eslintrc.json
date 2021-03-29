@@ -17,6 +17,8 @@
     "rules": {
         "object-curly-newline": "off",
         "implicit-arrow-linebreak": "off",
-        "func-names": "off"
+        "func-names": "off",
+        "no-underscore-dangle": "off",
+        "no-param-reassign": "off"
     }
 }

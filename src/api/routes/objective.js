@@ -1,6 +1,7 @@
 const ObjectiveController = require('../controllers/objective');
-const { isAuthenticated } = require('../middleware/auth');
-// const { uploadSingle } = require('../middleware/multer');
+const { isAuthenticated, restrictTo } = require('../middleware/auth');
+const keyResultRoute = require('./keyResult');
+const subObjectiveRoute = require('./subObjective');
 
 /**
  * @name objectiveRoute
@@ -8,15 +9,17 @@ const { isAuthenticated } = require('../middleware/auth');
  * @returns {Null} Null
  */
 const objectiveRoute = (objectiveRoutes) => {
+  objectiveRoutes.use('/objectives/:objectiveId/keyResults', keyResultRoute);
+  objectiveRoutes.use('/objectives/:objectiveId/sub-objectives', subObjectiveRoute);
   objectiveRoutes
     .route('/objectives')
     .get(isAuthenticated, ObjectiveController.getAllObjectives)
-    .post(isAuthenticated, ObjectiveController.createObjective);
+    .post(isAuthenticated, restrictTo('admin'), ObjectiveController.createObjective);
   objectiveRoutes
     .route('/objectives/:objectiveId')
     .get(isAuthenticated, ObjectiveController.getOneObjective)
-    .patch(isAuthenticated, ObjectiveController.updateObjective)
-    .delete(isAuthenticated, ObjectiveController.deleteObjective);
+    .patch(isAuthenticated, restrictTo('admin'), ObjectiveController.updateObjective)
+    .delete(isAuthenticated, restrictTo('admin'), ObjectiveController.deleteObjective);
 };
 
 module.exports = objectiveRoute;

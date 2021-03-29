@@ -32,7 +32,6 @@ const userSchema = mongoose.Schema(
       type: String,
     },
     manager: String,
-    group: Array,
     passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetExpires: Date,
@@ -47,6 +46,12 @@ const userSchema = mongoose.Schema(
     toObject: { virtuals: true },
   },
 );
+
+userSchema.virtual('groups', {
+  ref: 'Group',
+  foreignField: 'members',
+  localField: '_id',
+});
 
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
@@ -64,7 +69,11 @@ userSchema.pre('save', function (next) {
 });
 
 userSchema.pre(/^find/, function (next) {
-  // this keyword points to current query
+  this.populate({ path: 'groups', select: 'name' });
+  next();
+});
+
+userSchema.pre(/^find/, function (next) {
   this.find({ active: { $ne: false } });
   next();
 });

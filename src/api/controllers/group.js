@@ -55,6 +55,30 @@ const GroupController = {
       data: null,
     });
   }),
+
+  addMembers: catchAsyncError(async (request, response) => {
+    const { groupId } = request.params;
+    const { members } = request.body;
+
+    const newMembers = await GroupService.addMembers(groupId, members);
+
+    return response.status(200).json({
+      status: 'success',
+      data: { members: newMembers },
+    });
+  }),
+
+  deleteMembers: catchAsyncError(async (request, response) => {
+    const { groupId } = request.params;
+    const { members } = request.body;
+
+    const newMembers = await GroupService.deleteMembers(groupId, members);
+
+    return response.status(200).json({
+      status: 'success',
+      data: { members: newMembers },
+    });
+  }),
 };
 
 module.exports = GroupController;

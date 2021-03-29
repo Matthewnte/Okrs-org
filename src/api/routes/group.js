@@ -17,6 +17,10 @@ const groupRoute = (groupRoutes) => {
     .get(isAuthenticated, GroupController.getOneGroup)
     .patch(isAuthenticated, GroupController.updateGroup)
     .delete(isAuthenticated, GroupController.deleteGroup);
+  groupRoutes
+    .route('/groups/:groupId/members')
+    .patch(isAuthenticated, GroupController.addMembers)
+    .delete(isAuthenticated, GroupController.deleteMembers);
 };
 
 module.exports = groupRoute;

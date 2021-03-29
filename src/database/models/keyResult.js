@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const commentSchema = require('./comment');
 
 const requiredField = {
   type: String,
@@ -16,11 +17,13 @@ const keyResultSchema = mongoose.Schema({
   objective: {
     type: mongoose.Schema.ObjectId,
     ref: 'Objective',
-    required: 'A keyResult must be attached to a lead',
+    required: 'A keyResult must belong to an objective',
   },
+  comments: [commentSchema],
   measureAs: { ...requiredField, enum: ['numberical', 'percentage', 'currency'] },
-  startValue: { ...requiredField },
-  targetValue: { ...requiredField },
+  startValue: requiredField,
+  currentValue: requiredField,
+  targetValue: requiredField,
 });
 
 keyResultSchema.pre(/^find/, function (next) {

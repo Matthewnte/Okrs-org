@@ -1,22 +1,19 @@
+const express = require('express');
 const KeyResultController = require('../controllers/keyResult');
-const { isAuthenticated } = require('../middleware/auth');
-// const { uploadSingle } = require('../middleware/multer');
+const commentRoute = require('./comment');
+const { isAuthenticated, restrictTo } = require('../middleware/auth');
 
-/**
- * @name keyResultRoute
- * @param {Object} keyResultRoutes Express Router Object
- * @returns {Null} Null
- */
-const keyResultRoute = (keyResultRoutes) => {
-  keyResultRoutes
-    .route('/keyResults')
-    .get(isAuthenticated, KeyResultController.getAllKeyResults)
-    .post(isAuthenticated, KeyResultController.createKeyResult);
-  keyResultRoutes
-    .route('/keyResults/:keyResultId')
-    .get(isAuthenticated, KeyResultController.getOneKeyResult)
-    .patch(isAuthenticated, KeyResultController.updateKeyResult)
-    .delete(isAuthenticated, KeyResultController.deleteKeyResult);
-};
+const keyResultRouter = express.Router({ mergeParams: true });
 
-module.exports = keyResultRoute;
+keyResultRouter.use('/:keyResultId/comments', commentRoute);
+keyResultRouter
+  .route('/')
+  .get(isAuthenticated, KeyResultController.getAllKeyResults)
+  .post(isAuthenticated, restrictTo('admin', 'lead'), KeyResultController.createKeyResult);
+keyResultRouter
+  .route('/:keyResultId')
+  .get(isAuthenticated, KeyResultController.getOneKeyResult)
+  .patch(isAuthenticated, restrictTo('admin', 'lead'), KeyResultController.updateKeyResult)
+  .delete(isAuthenticated, restrictTo('admin', 'lead'), KeyResultController.deleteKeyResult);
+
+module.exports = keyResultRouter;

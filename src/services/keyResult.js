@@ -6,8 +6,8 @@ const KeyResultService = {
     const keyResult = await FactoryService.createOne(KeyResult, data);
     return keyResult;
   },
-  getAllKeyResults: async (query) => {
-    const keyResults = await FactoryService.getAll(KeyResult, query);
+  getAllKeyResults: async (query, filter) => {
+    const keyResults = await FactoryService.getAll(KeyResult, query, filter);
     return keyResults;
   },
   getOneKeyResult: async (keyResultId) => {

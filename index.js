@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const BaseRoutes = require('./src/api/routes');
+const keyResultRoutes = require('./src/api/routes/keyResult');
 const logger = require('./src/config/winston');
 const mongoConnection = require('./src/database/mongoose');
 const errorHandler = require('./src/api/middleware/errorHandler');
@@ -28,6 +29,7 @@ app.use(
 app.use(cookieParser());
 app.use(urlencoded({ extended: false }));
 
+app.use('/keyResults', keyResultRoutes);
 app.use('/', BaseRoutes);
 app.use('/docs', express.static('dist/docs'));
 app.all('*', (request, response, next) => {
