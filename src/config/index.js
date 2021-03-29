@@ -2,6 +2,7 @@ require('dotenv').config();
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
+console.log(process.env);
 module.exports = {
   port: process.env.PORT,
   defaultAppId: process.env.DEFAULT_APP_ID,
