@@ -15,7 +15,8 @@ module.exports = {
   baseDomain: process.env.BASE_DOMAIN,
 
   database: {
-    url: process.env.DATABASE_URL,
+    url: process.env.DB_URL,
+    password: process.env.DB_PASSWORD,
   },
 
   email: {

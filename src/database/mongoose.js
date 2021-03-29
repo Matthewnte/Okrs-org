@@ -7,11 +7,11 @@ const logger = require('../config/winston');
  * @return {Null} Null
  */
 const connectDB = async () => {
+  const uri = config.database.url.replace('<password>', config.database.password);
   try {
-    await mongoose.connect(config.database.url, {
+    await mongoose.connect(uri, {
       useNewUrlParser: true,
       useCreateIndex: true,
-      useFindAndModify: false,
       useUnifiedTopology: true,
     });
     logger.info('DB connection successful');
