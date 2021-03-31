@@ -1,14 +1,9 @@
 const mongoose = require('mongoose');
 
-const requiredField = {
-  type: String,
-  required: true,
-};
-
 const objectiveSchema = mongoose.Schema(
   {
-    name: requiredField,
-    description: requiredField,
+    name: { type: String, required: true },
+    description: { type: String, required: true },
     owner: {
       type: mongoose.Schema.ObjectId,
       ref: 'User',
@@ -31,6 +26,7 @@ const objectiveSchema = mongoose.Schema(
     },
     percentageRelevance: {
       type: Number,
+      default: 100,
       min: [1, 'Percentage relevance must be above 1'],
       max: [100, 'Relevance can not be above 100'],
     },
@@ -42,21 +38,6 @@ const objectiveSchema = mongoose.Schema(
     toObject: { virtuals: true },
   },
 );
-
-// objectiveSchema.statics.calcPercentage = async function () {
-//   const stats = await this.aggregate([
-//     {
-//       $match: { objective: { $ne: null } },
-//     },
-//     {
-//       $group: {
-//         _id: '$owner',
-//         percentageAverage: { $avg: '$progress' },
-//       },
-//     },
-//   ]);
-//   console.log(stats);
-// };
 
 objectiveSchema.virtual('subObjectives', {
   ref: 'Objective',
@@ -70,11 +51,6 @@ objectiveSchema.virtual('keyResult', {
   localField: '_id',
 });
 
-// objectiveSchema.post(/^find/, function (next) {
-//   this.constructor.calcPercentage();
-//   next();
-// });
-
 objectiveSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'lead',
@@ -86,7 +62,7 @@ objectiveSchema.pre(/^find/, function (next) {
     })
     .populate({
       path: 'subObjectives',
-      select: 'name',
+      select: 'name progress',
     });
   next();
 });

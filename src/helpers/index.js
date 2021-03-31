@@ -7,9 +7,9 @@ const helpers = {
       const char = Math.floor(Math.random() * str.length + 1);
       pass += str.charAt(char);
     }
-
     return pass;
   },
+
   filterUnwantedFields: (obj, allowedFields) => {
     const newObj = {};
     Object.keys(obj).forEach((el) => {

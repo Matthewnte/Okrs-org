@@ -33,8 +33,7 @@ app.get('/health', (request, response) =>
   response.status(200).json({
     status: 'success',
     message: 'Okay',
-  }),
-);
+  }));
 
 app.use('/keyResults', keyResultRoutes);
 app.use('/', BaseRoutes);

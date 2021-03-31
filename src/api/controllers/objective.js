@@ -13,7 +13,8 @@ const ObjectiveController = {
 
   getAllObjectives: catchAsyncError(async (request, response) => {
     const { query } = request;
-    const { objectiveId } = request.params;
+    let { objectiveId } = request.params;
+    if (!objectiveId) objectiveId = null;
 
     const objectives = await ObjectiveService.getAllObjectives(query, objectiveId);
 
@@ -29,7 +30,7 @@ const ObjectiveController = {
     const data = { objectiveId };
     if (subObjectiveId) data.objectiveId = subObjectiveId;
 
-    const objective = await ObjectiveService.getOneObjective(data, subObjectiveId);
+    const objective = await ObjectiveService.getOneObjective(data);
 
     return response.status(201).json({
       status: 'success',
