@@ -1,5 +1,6 @@
 /* eslint-disable require-jsdoc */
 const Exception = require('../../helpers/exception');
+const logger = require('../../config/winston');
 
 const handleCastErrorDB = (err) => {
   const message = `Invalid ${err.path}: ${err.value}`;
@@ -40,6 +41,7 @@ const sendErrorProd = (err, res) => {
 };
 
 module.exports = (err, req, res, next) => {
+  logger.log(err);
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
 
