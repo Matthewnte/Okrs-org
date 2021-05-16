@@ -22,6 +22,11 @@ const keyResultSchema = mongoose.Schema({
   comments: [commentSchema],
   measureAs: { ...requiredField, enum: ['numberical', 'percentage', 'currency'] },
   startValue: requiredField,
+  status: {
+    type: String,
+    enum: ['none', 'needsAttention', 'offTrack, onTrack'],
+    default: 'none',
+  },
   currentValue: requiredField,
   targetValue: requiredField,
 });

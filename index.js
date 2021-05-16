@@ -29,12 +29,7 @@ app.use(
 app.use(cookieParser());
 app.use(urlencoded({ extended: false }));
 
-app.get('/health', (request, response) =>
-  response.status(200).json({
-    status: 'success',
-    message: 'Okay',
-  }),
-);
+app.get('/health', (request, response) => response.json({ status: 'up' }));
 
 app.use('/keyResults', keyResultRoutes);
 app.use('/', BaseRoutes);
