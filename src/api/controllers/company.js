@@ -16,7 +16,7 @@ const CompanyController = {
 
     const companies = await CompanyService.getAllCompanies(query);
 
-    return response.status(201).json({
+    return response.status(200).json({
       status: 'success',
       result: companies.length,
       data: { companies },
@@ -28,7 +28,7 @@ const CompanyController = {
 
     const company = await CompanyService.getOneCompany(companyId);
 
-    return response.status(201).json({
+    return response.status(200).json({
       status: 'success',
       data: { company },
     });

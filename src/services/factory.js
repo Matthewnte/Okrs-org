@@ -2,14 +2,14 @@ const Exception = require('../helpers/exception');
 const ApiFeatures = require('../helpers/apiFeatures');
 
 const FactoryService = {
-  getAll: async (Model, incomingQuery, filter = {}) => {
+  getAll: async (Model, incomingQuery = {}, filter = {}, populateOptions) => {
     // Execute query
     const features = new ApiFeatures(Model.find(filter), incomingQuery)
       .filter()
       .sort()
       .limitFields()
       .paginate();
-    const doc = await features.query;
+    const doc = await features.query.populate(populateOptions);
 
     // Send response
     return doc;

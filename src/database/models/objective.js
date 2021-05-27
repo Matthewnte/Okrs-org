@@ -31,7 +31,10 @@ const objectiveSchema = mongoose.Schema(
       max: [100, 'Relevance can not be above 100'],
     },
     progress: { type: Number, default: 0 },
-    timeFrame: { min: Date.now, type: Date },
+    timeFrame: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'TimeFrame',
+    },
   },
   {
     toJSON: { virtuals: true },
@@ -63,6 +66,10 @@ objectiveSchema.pre(/^find/, function (next) {
     .populate({
       path: 'subObjectives',
       select: 'name progress',
+    })
+    .populate({
+      path: 'timeFrame',
+      select: 'name',
     });
   next();
 });

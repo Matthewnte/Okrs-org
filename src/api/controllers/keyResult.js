@@ -22,7 +22,7 @@ const KeyResultController = {
     if (objectiveId) filter = { objective: objectiveId };
     const keyResults = await KeyResultService.getAllKeyResults(query, filter);
 
-    return response.status(201).json({
+    return response.status(200).json({
       status: 'success',
       result: keyResults.length,
       data: { keyResults },
@@ -34,7 +34,7 @@ const KeyResultController = {
 
     const keyResult = await KeyResultService.getOneKeyResult(keyResultId);
 
-    return response.status(201).json({
+    return response.status(200).json({
       status: 'success',
       data: { keyResult },
     });

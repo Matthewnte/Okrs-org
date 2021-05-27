@@ -3,7 +3,7 @@ const ObjectiveService = require('../../services/objective');
 
 const ObjectiveController = {
   createObjective: catchAsyncError(async (request, response) => {
-    const newObjective = await ObjectiveService.createObjective(request.body);
+    const newObjective = await ObjectiveService.createObjective(request.body, request.user.id);
 
     return response.status(201).json({
       status: 'successful',
@@ -18,7 +18,7 @@ const ObjectiveController = {
 
     const objectives = await ObjectiveService.getAllObjectives(query, objectiveId);
 
-    return response.status(201).json({
+    return response.status(200).json({
       status: 'success',
       result: objectives.length,
       data: { objectives },
@@ -32,7 +32,7 @@ const ObjectiveController = {
 
     const objective = await ObjectiveService.getOneObjective(data);
 
-    return response.status(201).json({
+    return response.status(200).json({
       status: 'success',
       data: { objective },
     });
@@ -43,7 +43,7 @@ const ObjectiveController = {
     const data = { objectiveId };
     if (subObjectiveId) data.objectiveId = subObjectiveId;
 
-    const objective = await ObjectiveService.updateObjective(data, request.body);
+    const objective = await ObjectiveService.updateObjective(data, request.body, request.user.id);
 
     return response.status(200).json({
       status: 'success',

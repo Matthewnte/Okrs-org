@@ -69,11 +69,6 @@ userSchema.pre('save', function (next) {
 });
 
 userSchema.pre(/^find/, function (next) {
-  this.populate({ path: 'groups', select: 'name' });
-  next();
-});
-
-userSchema.pre(/^find/, function (next) {
   this.find({ active: { $ne: false } });
   next();
 });

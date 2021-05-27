@@ -6,6 +6,7 @@ const objectiveRoute = require('./objective');
 const groupRoute = require('./group');
 const companyRoute = require('./company');
 const timeFrameRoute = require('./timeFrame');
+const notificationRoute = require('./notification');
 
 const BaseRoutes = express.Router();
 
@@ -15,5 +16,6 @@ objectiveRoute(BaseRoutes);
 groupRoute(BaseRoutes);
 companyRoute(BaseRoutes);
 timeFrameRoute(BaseRoutes);
+notificationRoute(BaseRoutes);
 
 module.exports = BaseRoutes;

@@ -6,10 +6,18 @@ const {
   calcSingleGroupProgress,
 } = require('../helpers/calcPercentage');
 const FactoryService = require('./factory');
+const Notification = require('../database/models/notification');
+const { admin } = require('../config');
 
 const ObjectiveService = {
-  createObjective: async (data) => {
+  createObjective: async (data, userId) => {
     const objective = await FactoryService.createOne(Objective, data);
+    await Notification.create({
+      type: 'objective',
+      initiatorUserId: userId,
+      recepientUserId: [admin.id, objective.lead],
+      entity: objective._id,
+    });
     return objective;
   },
 
@@ -37,8 +45,14 @@ const ObjectiveService = {
     return objective;
   },
 
-  updateObjective: async ({ objectiveId }, data) => {
+  updateObjective: async ({ objectiveId }, data, userId) => {
     const objective = await FactoryService.updateOne(Objective, objectiveId, data);
+    await Notification.create({
+      type: 'objective',
+      initiatorUserId: userId,
+      recepientUserId: [admin.id, objective.lead],
+      entity: objectiveId,
+    });
     return objective;
   },
 

@@ -7,6 +7,7 @@ const CalcPercentage = {
       sumOfProgress += obj.progress;
       noOfSubOjectives += 1;
     });
+    if (noOfSubOjectives === 0 && sumOfProgress === 0) return 0;
     const progress = sumOfProgress / noOfSubOjectives;
     return progress;
   },

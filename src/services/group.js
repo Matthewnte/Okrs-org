@@ -35,6 +35,7 @@ const GroupService = {
     const group = await FactoryService.getOne(Group, groupId);
     const updatedMembers = [...group.members, ...members];
     group.members = updatedMembers;
+    console.log('😂😂😂');
     await group.save();
     return group.members;
   },

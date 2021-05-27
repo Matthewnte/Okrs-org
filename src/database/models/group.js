@@ -22,7 +22,6 @@ const groupSchema = mongoose.Schema({
   ],
   subgroup: [String],
   slackChannel: [String],
-  timeFrame: { ...requiredField, min: Date.now, type: Date },
 });
 
 module.exports = mongoose.model('Group', groupSchema);

@@ -24,7 +24,7 @@ const keyResultSchema = mongoose.Schema({
   startValue: requiredField,
   status: {
     type: String,
-    enum: ['none', 'needsAttention', 'offTrack, onTrack'],
+    enum: ['none', 'needsAttention', 'offTrack', 'onTrack'],
     default: 'none',
   },
   currentValue: requiredField,

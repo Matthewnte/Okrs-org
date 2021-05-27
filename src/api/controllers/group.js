@@ -16,7 +16,7 @@ const GroupController = {
 
     const groups = await GroupService.getAllGroups(query);
 
-    return response.status(201).json({
+    return response.status(200).json({
       status: 'success',
       result: groups.length,
       data: { groups },
@@ -28,7 +28,7 @@ const GroupController = {
 
     const group = await GroupService.getOneGroup(groupId);
 
-    return response.status(201).json({
+    return response.status(200).json({
       status: 'success',
       data: { group },
     });

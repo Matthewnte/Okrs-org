@@ -32,4 +32,8 @@ module.exports = {
     secret: process.env.PUSHER_SECRET,
     cluster: process.env.PUSHER_CLUSTER,
   },
+
+  admin: {
+    id: process.env.ADMIN_ID,
+  },
 };

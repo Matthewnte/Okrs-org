@@ -8,12 +8,15 @@ const { filterUnwantedFields } = require('../helpers');
 
 const UserService = {
   getAllUsers: async (incomingQuery) => {
-    const users = await FactoryService.getAll(User, incomingQuery);
+    const option = { path: 'groups', select: 'name' };
+    const filter = {};
+    const users = await FactoryService.getAll(User, incomingQuery, filter, option);
     return users;
   },
 
   getOneUser: async (userId) => {
-    const user = await FactoryService.getOne(User, userId);
+    const option = { path: 'groups', select: 'name' };
+    const user = await FactoryService.getOne(User, userId, option);
     return user;
   },
 
