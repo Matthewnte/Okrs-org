@@ -31,7 +31,11 @@ const userSchema = mongoose.Schema(
     jobTitle: {
       type: String,
     },
-    manager: String,
+    admin: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User',
+      required: 'A User must belong to an admin',
+    },
     passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetExpires: Date,

@@ -7,6 +7,7 @@ const sendEmail = require('../helpers/email');
 
 const AuthService = {
   userSignup: async (userData) => {
+    console.log({ userData });
     const user = await User.create(userData);
 
     const { accessToken, refreshToken } = JWTHelper.generateTokens({

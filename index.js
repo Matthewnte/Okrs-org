@@ -30,6 +30,7 @@ app.use(
 );
 app.use(cookieParser());
 app.use(urlencoded({ extended: false }));
+app.use(helmet());
 
 app.get('/health', (request, response) => response.json({ status: 'up' }));
 
@@ -39,8 +40,6 @@ app.use('/docs', express.static('dist/docs'));
 app.all('*', (request, response, next) => {
   next(new Exception('Route not Found!', 404));
 });
-
-app.use(helmet());
 
 app.use(errorHandler);
 

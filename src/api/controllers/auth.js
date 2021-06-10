@@ -7,6 +7,8 @@ exports.signup = catchAsyncError(async (request, response) => {
     firstName: request.body.firstName,
     lastName: request.body.lastName,
     email: request.body.email,
+    jobTitle: request.body.jobTitle,
+    admin: request.body.admin,
   };
 
   // get base url
