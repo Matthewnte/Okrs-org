@@ -21,7 +21,13 @@ const CalcPercentage = {
 
   calcAllProgress: (objectives) => {
     const updatedObjectives = objectives.map((objective) => {
-      objective.progress = CalcPercentage.calcKeyResultAverage(objective);
+      if (objective.subObjectives.length > 0 && objective.objective === null) {
+        objective.progress = CalcPercentage.getSubObjectiveProgress(objective);
+      } else if (objective.subObjectives.length > 0 && objective.objective !== null) {
+        objective.progress = CalcPercentage.percentageRelevanceProgress(objective);
+      } else {
+        objective.progress = CalcPercentage.calcKeyResultAverage(objective);
+      }
       return objective;
     });
     return updatedObjectives;
