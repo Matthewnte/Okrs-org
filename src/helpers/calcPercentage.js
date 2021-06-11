@@ -21,7 +21,7 @@ const CalcPercentage = {
 
   calcAllProgress: (objectives) => {
     const updatedObjectives = objectives.map((objective) => {
-      objective.progress = CalcPercentage.calcSingleProgress(objective);
+      objective.progress = CalcPercentage.calcKeyResultAverage(objective);
       return objective;
     });
     return updatedObjectives;
