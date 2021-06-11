@@ -35,9 +35,6 @@ keyResultSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'lead',
     select: 'firstName lastName',
-  }).populate({
-    path: 'objective',
-    select: '-owner -lead -description -timeFrame -__v -status',
   });
   next();
 });

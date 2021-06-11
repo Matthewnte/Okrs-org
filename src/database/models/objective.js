@@ -48,7 +48,7 @@ objectiveSchema.virtual('subObjectives', {
   localField: '_id',
 });
 
-objectiveSchema.virtual('keyResult', {
+objectiveSchema.virtual('keyResults', {
   ref: 'KeyResult',
   foreignField: 'objective',
   localField: '_id',
@@ -56,21 +56,12 @@ objectiveSchema.virtual('keyResult', {
 
 objectiveSchema.pre(/^find/, function (next) {
   this.populate({
-    path: 'lead',
-    select: 'firstName lastName',
-  })
-    .populate({
-      path: 'owner',
-      select: 'firstName lastName',
-    })
-    .populate({
-      path: 'subObjectives',
-      select: 'name progress',
-    })
-    .populate({
-      path: 'timeFrame',
-      select: 'name',
-    });
+    path: 'subObjectives',
+    select: 'name progress',
+  }).populate({
+    path: 'timeFrame',
+    select: 'name',
+  });
   next();
 });
 

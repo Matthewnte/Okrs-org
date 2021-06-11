@@ -1,26 +1,22 @@
 const CalcPercentage = {
-  calcSingleProgress: (objective) => {
-    let noOfSubOjectives = 0;
-    let sumOfProgress = 0;
-    if (!objective.subObjectives) return objective;
-    objective.subObjectives.forEach((obj) => {
-      sumOfProgress += obj.progress;
-      noOfSubOjectives += 1;
-    });
-    if (noOfSubOjectives === 0 && sumOfProgress === 0) return 0;
-    const progress = sumOfProgress / noOfSubOjectives;
-    return progress;
+  calcKeyResultAverage: (objective) => {
+    if (objective.keyResults) {
+      const total = objective.keyResults.reduce(
+        (result, keyResult) => result + parseInt(keyResult.currentValue, 10),
+        0,
+      );
+      return total / objective.keyResults.length;
+    }
   },
 
-  calcKeyResultAverage: (objective) => {
-    let noOfKeyResult = 0;
-    let sumOfProgress = 0;
-    objective.keyResult.forEach((result) => {
-      sumOfProgress += result.currentValue;
-      noOfKeyResult += 1;
+  percentageRelevanceProgress: (objective) => {
+    const keyResultAverageArray = objective.subObjectives.map((subObjective) => {
+      const keyResultAverage = CalcPercentage.calcKeyResultAverage(subObjective);
+      return CalcPercentage.calcPercentageRelevance(subObjective, keyResultAverage);
     });
-    const keyResultAverage = sumOfProgress / noOfKeyResult;
-    return keyResultAverage;
+
+    console.log(keyResultAverageArray);
+    return keyResultAverageArray.reduce((a, b) => a + b, 0) / keyResultAverageArray.length;
   },
 
   calcAllProgress: (objectives) => {
@@ -33,24 +29,15 @@ const CalcPercentage = {
 
   calcPercentageRelevance: (objective, average) => (objective.percentageRelevance / 100) * average,
 
-  calcSingleGroupProgress: (objective) => {
-    let progress;
-    if (!objective.keyResult || objective.keyResult.length === 0) return objective.progress;
+  getSubObjectiveProgress: (objective) => {
     const keyResultAverage = CalcPercentage.calcKeyResultAverage(objective);
-    const objectiveProgressValue = CalcPercentage.calcPercentageRelevance(
-      objective,
-      keyResultAverage,
-    );
-    if (objective.subObjectives || objective.subObjectives.length > 0) {
-      const subObjectivesAverage = CalcPercentage.calcKeyResultAverage(objective.subObjectives);
-      const subObjectiveProgressValue = CalcPercentage.calcPercentageRelevance(
-        objective.subObjectives,
-        subObjectivesAverage,
-      );
-      progress = (objectiveProgressValue + subObjectiveProgressValue) / 2;
-    } else {
-      progress = objectiveProgressValue;
-    }
+
+    const subObjectiveAverage =
+      objective.subObjectives.reduce((result, subObjective) => result + subObjective.progress, 0) /
+      objective.subObjectives.length;
+
+    console.log({ keyResultAverage }, { subObjectiveAverage });
+    const progress = (keyResultAverage + subObjectiveAverage) / 2;
     return progress;
   },
 

@@ -1,9 +1,10 @@
 const Objective = require('../database/models/objective');
 const {
   calcAllProgress,
-  calcSingleProgress,
+  calcKeyResultAverage,
   calcAllGroupProgress,
-  calcSingleGroupProgress,
+  getSubObjectiveProgress,
+  percentageRelevanceProgress,
 } = require('../helpers/calcPercentage');
 const FactoryService = require('./factory');
 const Notification = require('../database/models/notification');
@@ -32,14 +33,17 @@ const ObjectiveService = {
 
   getOneObjective: async ({ objectiveId }) => {
     const populateOptions = {
-      path: 'keyResult',
-      select: 'name currentValue',
+      path: 'keyResults',
+      select: '-__v -startValue -targetValue -description -lead -comments',
     };
     const objective = await FactoryService.getOne(Objective, objectiveId, populateOptions);
-    if (objective.objective === null) {
-      objective.progress = calcSingleProgress(objective);
+
+    if (objective.subObjectives.length > 0 && objective.objective === null) {
+      objective.progress = getSubObjectiveProgress(objective);
+    } else if (objective.subObjectives.length > 0 && objective.objective !== null) {
+      objective.progress = percentageRelevanceProgress(objective);
     } else {
-      objective.progress = calcSingleGroupProgress(objective);
+      objective.progress = calcKeyResultAverage(objective);
     }
     await objective.save();
     return objective;
