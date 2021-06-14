@@ -10,6 +10,10 @@ const NotificationRoute = (notificationRoutes) => {
   notificationRoutes
     .route('/notifications')
     .get(isAuthenticated, NotificationController.getAllNotifications);
+
+  notificationRoutes
+    .route('/notifications/:id/read')
+    .patch(isAuthenticated, NotificationController.markAsRead);
 };
 
 module.exports = NotificationRoute;

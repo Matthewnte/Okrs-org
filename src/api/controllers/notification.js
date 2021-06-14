@@ -14,6 +14,17 @@ const NotificationController = {
       data: { notifications },
     });
   }),
+
+  markAsRead: catchAsyncError(async (request, response) => {
+    const { id } = request.params;
+
+    const notifications = await NotificationService.markAsRead(id);
+
+    return response.status(200).json({
+      status: 'success',
+      data: { notifications },
+    });
+  }),
 };
 
 module.exports = NotificationController;
