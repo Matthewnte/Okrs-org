@@ -1,5 +1,5 @@
 const NotificationController = require('../controllers/notification');
-const { isAuthenticated, restrictTo } = require('../middleware/auth');
+const { isAuthenticated } = require('../middleware/auth');
 
 /**
  * @name NotificationRoute

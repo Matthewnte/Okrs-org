@@ -15,7 +15,13 @@ const KeyResultService = {
     return keyResult;
   },
   updateKeyResult: async (keyResultId, data) => {
-    const keyResult = await FactoryService.updateOne(KeyResult, keyResultId, data);
+    const keyResult = await KeyResult.findOne({ _id: keyResultId });
+
+    Object.keys(data).forEach((item) => {
+      keyResult[item] = data[item];
+    });
+
+    keyResult.save();
     return keyResult;
   },
   deleteKeyResult: async (keyResultId) => {

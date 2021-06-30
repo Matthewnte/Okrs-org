@@ -55,13 +55,11 @@ objectiveSchema.virtual('keyResults', {
 });
 
 objectiveSchema.pre(/^find/, function (next) {
-  this.populate({
-    path: 'subObjectives',
-    select: 'name progress',
-  }).populate({
-    path: 'timeFrame',
-    select: 'name',
-  });
+  this.populate({ path: 'subObjectives', select: 'name progress' })
+    .populate({ path: 'timeFrame', select: 'name' })
+    .populate({ path: 'lead', select: 'firstName lastName' })
+    .populate({ path: 'keyResults', select: 'currentValue' })
+    .populate({ path: 'owner', select: 'firstName lastName' });
   next();
 });
 
