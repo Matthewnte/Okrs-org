@@ -19,7 +19,7 @@ module.exports = {
     host: process.env.EMAIL_HOST,
     port: process.env.EMAIL_PORT,
     sender: process.env.EMAIL_SENDER || 'admin@okr.com',
-    okr: 'Wehaul247logistics@gmail.com',
+    okr: process.env.OKR_EMAIL,
   },
 
   cloudinary: {
