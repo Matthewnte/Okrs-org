@@ -18,6 +18,8 @@ module.exports = {
     password: process.env.EMAIL_PASSWORD,
     host: process.env.EMAIL_HOST,
     port: process.env.EMAIL_PORT,
+    sender: process.env.EMAIL_SENDER || 'admin@okr.com',
+    okr: 'Wehaul247logistics@gmail.com',
   },
 
   cloudinary: {
@@ -35,5 +37,12 @@ module.exports = {
 
   admin: {
     id: process.env.ADMIN_ID,
+  },
+
+  oauth2: {
+    clientId: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+    redirectUri: process.env.REDIRECT_URI,
+    refreshToken: process.env.REFRESH_TOKEN,
   },
 };

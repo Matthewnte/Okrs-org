@@ -5,7 +5,6 @@ const morgan = require('morgan');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-const WebSocket = require('ws');
 const BaseRoutes = require('./src/api/routes');
 const keyResultRoutes = require('./src/api/routes/keyResult');
 const logger = require('./src/config/winston');
@@ -44,17 +43,6 @@ app.all('*', (request, response, next) => {
 app.use(errorHandler);
 
 const server = http.createServer(app);
-
-const wss = new WebSocket.Server({ server });
-
-wss.on('connection', async (ws) => {
-  console.log('connected...😀');
-  ws.on('newUser', (data) => {
-    console.log(data);
-    ws.send(`Hello, you sent -> ${data}`);
-  });
-  ws.send('Hi there, I am a WebSocket server');
-});
 
 server.listen(PORT, () => {
   logger.info(`Server running on Port ${PORT}`);

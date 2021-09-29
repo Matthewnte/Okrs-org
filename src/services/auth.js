@@ -23,7 +23,7 @@ const AuthService = {
         subject: 'Temporary OKR password',
         message,
       });
-    } catch (err) {
+    } catch (error) {
       await User.findByIdAndDelete(user._id);
       throw new Exception('There was an error sending this mail, Try again later', 500);
     }
